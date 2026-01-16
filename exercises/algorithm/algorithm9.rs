@@ -1,8 +1,7 @@
 /*
-	heap
-	This question requires you to implement a binary heap function
+    heap
+    This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -38,6 +37,21 @@ where
 
     pub fn add(&mut self, value: T) {
         //TODO
+        if self.len() == 0 {
+            self.count += 1;
+            self.items.push(value);
+            return;
+        }
+        for i in 1..self.items.len() {
+            if (self.comparator)(&value, &self.items[i]) {
+                self.items.insert(i, value);
+                break;
+            } else if i == self.items.len() - 1 {
+                self.items.insert(i + 1, value);
+                break;
+            }
+        }
+        self.count += 1;
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -58,7 +72,7 @@ where
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
         //TODO
-		0
+        self.left_child_idx(idx)
     }
 }
 
@@ -85,7 +99,12 @@ where
 
     fn next(&mut self) -> Option<T> {
         //TODO
-		None
+        if self.is_empty() {
+            return None;
+        } else {
+            self.count -= 1;
+            return Some(self.items.remove(1));
+        }
     }
 }
 
